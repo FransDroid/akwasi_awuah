@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_number": "607473214755",
+    "firebase_url": "https://akwasi-awuah-168417.firebaseio.com",
+    "project_id": "akwasi-awuah-168417",
+    "storage_bucket": "akwasi-awuah-168417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607473214755:android:7edbecb9e7cc44f5",
+        "android_client_info": {
+          "package_name": "com.jimahtech.akwasiawuah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607473214755-5ev3mi9t8r1qbikkka5f1m2cu4r0muar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNkikNXAFCvQfNwEHN8R4XHE5XbpoHP0s"
+        },
+        {
+          "current_key": "AIzaSyCeusRCJZtG1RGBzt7s-AArYYwGFZ6GVGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607473214755-5ev3mi9t8r1qbikkka5f1m2cu4r0muar.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607473214755-nf4jp58m30j0i22i9pkf5utfsgfdq9uc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.akwasiawuah"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-7127798935438869~1945748834"
+    }
+  ],
+  "configuration_version": "1"
+}
