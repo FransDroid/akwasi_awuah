@@ -80,9 +80,12 @@ class _LiveTVState extends State<LiveTV> {
         ),
       );
       return YoutubePlayerBuilder(
-         /* onExitFullScreen: () {
+          onExitFullScreen: () {
             SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-          },*/
+          },
+          onEnterFullScreen: (){
+            SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+          },
           player: YoutubePlayer(
             controller: _controller,
           ),

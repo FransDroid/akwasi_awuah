@@ -161,7 +161,7 @@ class _LiveRadioState extends State<LiveRadio> {
                child:  Column(
                  children: <Widget>[
                     Card(
-                     color: isIOS? CupertinoColors.extraLightBackgroundGray :const Color(0X00910076ce),
+                     color: isIOS? CupertinoColors.extraLightBackgroundGray :const Color(0x910076ce),
                      elevation: 2,
                      margin: const EdgeInsets.all(10),
                      child: Column(
@@ -208,8 +208,8 @@ class _LiveRadioState extends State<LiveRadio> {
                ),
              ),
               Expanded(
+                flex: 2,
                child: _buildPlayer(),
-               flex: 1,
              )
            ],
          ),
@@ -222,35 +222,38 @@ class _LiveRadioState extends State<LiveRadio> {
    }
 
    Widget _buildPlayer() =>
-       StreamBuilder<PlayerState>(
-         stream: _player.playerStateStream,
-         builder: (context, snapshot) {
-           final playerState = snapshot.data;
-           final processingState = playerState?.processingState;
-           final playing = playerState?.playing;
-           if (processingState == ProcessingState.loading ||
-               processingState == ProcessingState.buffering) {
-             return Center(child: PlatformCircularProgressIndicator());
-           } else if (playing != true) {
-             return IconButton(
-               icon: Icon(context.platformIcons.playArrow,color: Colors.white),
-               iconSize: 64.0,
-               onPressed: _player.play,
-             );
-           } else if (processingState != ProcessingState.completed) {
-             return IconButton(
-               icon:  Icon(context.platformIcons.pause,color: Colors.white,),
-               iconSize: 64.0,
-               onPressed: _player.pause,
-             );
-           } else {
-             return IconButton(
-               icon: Icon(context.platformIcons.loop,color: Colors.white),
-               iconSize: 64.0,
-               onPressed: () => _player.seek(Duration.zero,
-                   index: _player.effectiveIndices!.first),
-             );
-           }
-         },
+       Padding(
+         padding: const EdgeInsets.only(bottom: 10),
+         child: StreamBuilder<PlayerState>(
+           stream: _player.playerStateStream,
+           builder: (context, snapshot) {
+             final playerState = snapshot.data;
+             final processingState = playerState?.processingState;
+             final playing = playerState?.playing;
+             if (processingState == ProcessingState.loading ||
+                 processingState == ProcessingState.buffering) {
+               return Center(child: PlatformCircularProgressIndicator());
+             } else if (playing != true) {
+               return IconButton(
+                 icon: Icon(context.platformIcons.playArrow,color: Colors.white),
+                 iconSize: 64.0,
+                 onPressed: _player.play,
+               );
+             } else if (processingState != ProcessingState.completed) {
+               return IconButton(
+                 icon:  Icon(context.platformIcons.pause,color: Colors.white,),
+                 iconSize: 64.0,
+                 onPressed: _player.pause,
+               );
+             } else {
+               return IconButton(
+                 icon: Icon(context.platformIcons.loop,color: Colors.white),
+                 iconSize: 64.0,
+                 onPressed: () => _player.seek(Duration.zero,
+                     index: _player.effectiveIndices!.first),
+               );
+             }
+           },
+         ),
        );
 }

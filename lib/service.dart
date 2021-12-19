@@ -90,4 +90,16 @@ class ServicesLibrary {
     }
     return result;
   }
+
+  Future<TVResponse?> getUpdate() async {
+    var response = await http.fetch("${_settings.apiBaseUrl}/app/api/tv.php",
+        headers: authorizationHeader2);
+    if (response.success) {
+      return TVResponse.fromJson(response.data);
+    }
+    else {
+      logWithTime("Error while trying to load data");
+    }
+    return null;
+  }
 }

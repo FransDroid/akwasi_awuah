@@ -1,4 +1,13 @@
 
+import 'dart:io';
+
+import 'package:akwasi_awuah/view_controller.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:package_info/package_info.dart';
+import 'package:provider/provider.dart';
+import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'config.dart';
@@ -51,5 +60,52 @@ class Helper {
     } else {
       return false;
     }
+  }
+
+  static Future<bool>? onWillPop() {
+    return null;
+  }
+
+  static checkUpdate(BuildContext context) async {
+
+    ViewController model = Provider.of<ViewController>(context,listen: false);
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String appName = packageInfo.appName;
+    String packageName = packageInfo.packageName;
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+
+    final update = await model.getTV();
+      if(update!.app_update_status == "1"){
+        if(Platform.isAndroid ? update.android_version != version : update.ios_version != version) {
+          showPlatformDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) {
+                return WillPopScope(
+                  onWillPop: () async {
+                    return false;
+                  },
+                  child: PlatformAlertDialog(
+                    title: const Text('Update App?'),
+                    content: Text(
+                        'A new version of $appName is available!'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('UPDATE NOW'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Platform.isAndroid
+                              ? StoreRedirect.redirect()
+                              : StoreRedirect.redirect(iOSAppId: '1480946758');
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              });
+        }
+      }
   }
 }

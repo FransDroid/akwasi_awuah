@@ -94,6 +94,11 @@ class ViewController extends ChangeNotifier {
   Future<List<AdsListModel>> getAdList(url) async {
     return _servicesLibrary.getAdList(url);
   }
+
+  Future<TVResponse?> getUpdate() async {
+    return _servicesLibrary.getUpdate();
+  }
+
 }
 
 

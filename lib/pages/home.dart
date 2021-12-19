@@ -1,3 +1,4 @@
+import 'package:akwasi_awuah/helper.dart';
 import 'package:akwasi_awuah/pages/contact_us.dart';
 import 'package:akwasi_awuah/pages/live_tv.dart';
 import 'package:akwasi_awuah/theme.dart';
@@ -35,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
       initialIndex: 0,
     );
     tabs = [const LiveRadio(), const LiveTV(), const ContactUs()];
+    Helper.checkUpdate(context);
   }
 
   @override
