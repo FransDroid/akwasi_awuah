@@ -99,6 +99,10 @@ class ViewController extends ChangeNotifier {
     return _servicesLibrary.getUpdate();
   }
 
+  Future<SendMessage?> sendMail(email,name,message) async {
+    return _servicesLibrary.sendMail(email,name,message);
+  }
+
 }
 
 

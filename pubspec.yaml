@@ -26,7 +26,8 @@ dependencies:
   video_player: ^2.2.7
   store_redirect: ^2.0.0
   google_mobile_ads: ^0.13.6
-  youtube_player_flutter: ^8.0.0
+  youtube_player_iframe: ^2.2.2
+  webview_flutter: ^3.0.0
 
 dev_dependencies:
   flutter_test:

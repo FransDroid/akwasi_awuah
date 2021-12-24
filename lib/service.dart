@@ -102,4 +102,16 @@ class ServicesLibrary {
     }
     return null;
   }
+
+  Future<SendMessage?> sendMail(email,name,message) async {
+    var response = await http.fetch("${_settings.apiBaseUrl}/api/support/add/$email/$name/$message/${_settings.apiAccessToken}",
+        headers: authorizationHeader2);
+    if (response.success) {
+      return SendMessage.fromJson(response.data);
+    }
+    else {
+      logWithTime("Error while trying to load data");
+    }
+    return null;
+  }
 }

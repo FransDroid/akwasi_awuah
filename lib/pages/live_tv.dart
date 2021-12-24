@@ -1,12 +1,13 @@
+import 'dart:io';
+
 import 'package:akwasi_awuah/widgets/banner_ad.dart';
-import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
+import '../helper.dart';
 import '../models.dart';
 import '../view_controller.dart';
 
@@ -21,46 +22,27 @@ class _LiveTVState extends State<LiveTV> {
   late ViewController model;
   List<AdsListModel> adList = <AdsListModel>[];
   bool isLoading = false;
-  late YoutubePlayerController _controller;
   String? videoId;
-  bool _isPlayerReady = false;
-  late PlayerState _playerState;
-  late YoutubeMetaData _videoMetaData;
 
   _LiveTVState();
 
   @override
   void initState() {
     super.initState();
+    if (Platform.isAndroid) WebView.platform = AndroidWebView();
     init();
   }
 
   @override
   void dispose() async {
-    _controller.dispose();
     super.dispose();
-  }
-
-  @override
-  void deactivate() {
-    _controller.pause();
-    super.deactivate();
-  }
-
-  void listener() {
-    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
-      setState(() {
-        _playerState = _controller.value.playerState;
-        _videoMetaData = _controller.metadata;
-      });
-    }
   }
 
   void init() async {
     isLoading = true;
     model = Provider.of<ViewController>(context, listen: false);
     final getTV = await model.getTV();
-    videoId = YoutubePlayer.convertUrlToId(getTV!.tv_url.toString());
+    videoId = Helper.convertUrlToId(getTV!.tv_url.toString());
     setState(() {
       isLoading = false;
     });
@@ -72,49 +54,39 @@ class _LiveTVState extends State<LiveTV> {
       return Center(
           child: PlatformCircularProgressIndicator()
       );
-    } else {
-      _controller = YoutubePlayerController(
-        initialVideoId: videoId!,
-        flags: const YoutubePlayerFlags(
-            isLive: true,
-        ),
-      );
-      return YoutubePlayerBuilder(
-          onExitFullScreen: () {
-            SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-          },
-          onEnterFullScreen: (){
-            SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-          },
-          player: YoutubePlayer(
-            controller: _controller,
-          ),
-          builder: (context, player) {
-            return Container(
+    }return Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('images/background.jpg'),
+                fit: BoxFit.cover)),
+        child: Column(
+          children: [
+            Container(
+              height: 250,
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('images/background.jpg'),
-                      fit: BoxFit.cover)),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  player,
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ReusableInlineExample(),
-                    ),
-                  )
-                ],
+                      image: AssetImage('images/logo_about.png'),
+                      fit: BoxFit.fitHeight)),
+              child: WebView(
+                  initialUrl:  Uri.dataFromString(
+                      "<body style=\"margin: 0; padding: 0\"><iframe  allowfullscreen=\"allowfullscreen\" width=\"100%\" height=\"100%\" src=\"https://www.youtube-nocookie.com/embed/" +
+                          "$videoId" +
+                          "\" frameborder=\"0\" allowfullscreen></iframe></body>",
+                      mimeType: 'text/html')
+                      .toString(),
+                  javascriptMode: JavascriptMode.unrestricted),
+            ),
+            const Expanded(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: ReusableInlineExample(),
               ),
-            );
-          }
+            ),
+          ],
+        ),
       );
     }
-  }
 
   @override
   Widget build(BuildContext context) {

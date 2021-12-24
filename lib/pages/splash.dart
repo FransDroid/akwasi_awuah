@@ -44,7 +44,7 @@ class SplashScreenState extends State<SplashPage> {
     return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('images/splash.jpg'), fit: BoxFit.cover),
+              image: AssetImage('images/splash.jpg'), fit: BoxFit.fitWidth),
         ));
   }
 }

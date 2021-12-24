@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:akwasi_awuah/helper.dart';
 import 'package:akwasi_awuah/models.dart';
@@ -208,7 +209,7 @@ class _LiveRadioState extends State<LiveRadio> {
                ),
              ),
               Expanded(
-                flex: 2,
+                flex: Platform.isAndroid ? 1 : 2,
                child: _buildPlayer(),
              )
            ],

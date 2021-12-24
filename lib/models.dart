@@ -208,3 +208,24 @@ class TVResponse {
         return data;
     }
 }
+
+class SendMessage {
+    String? code;
+    String? message;
+
+    SendMessage({this.code, this.message});
+
+    factory SendMessage.fromJson(Map<String, dynamic> json) {
+        return SendMessage(
+            code: json['code'],
+            message: json['message'],
+        );
+    }
+
+    Map<String, dynamic> toJson() {
+        final Map<String, dynamic> data = new Map<String, dynamic>();
+        data['code'] = this.code;
+        data['message'] = this.message;
+        return data;
+    }
+}

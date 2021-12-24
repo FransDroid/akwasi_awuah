@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           } else if (awaitedData.hasError) {
             return PlatformScaffold(
-                body: createErrorWidget(error: awaitedData.error.toString()));
+                body: createErrorWidget(context, error: awaitedData.error.toString()));
           } else {
             return PlatformScaffold(body: createProgressWidget(context));
           }

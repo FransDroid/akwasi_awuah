@@ -3,6 +3,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'dart:io' show Platform;
 
 class ReusableInlineExample extends StatefulWidget {
+  const ReusableInlineExample({Key? key}) : super(key: key);
+
   @override
   _ReusableInlineExampleState createState() => _ReusableInlineExampleState();
 }
@@ -19,8 +21,8 @@ class _ReusableInlineExampleState extends State<ReusableInlineExample> {
     _bannerAd = BannerAd(
         size: AdSize.mediumRectangle,
         adUnitId: Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/6300978111'
-            : 'ca-app-pub-3940256099942544/2934735716',
+            ? 'ca-app-pub-1853630939538135/3796963605'
+            : 'ca-app-pub-1853630939538135/8188878027',
         listener: BannerAdListener(
           onAdLoaded: (Ad ad) {
             print('$BannerAd loaded.');

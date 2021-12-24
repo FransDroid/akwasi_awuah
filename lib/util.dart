@@ -1,25 +1,26 @@
 import 'package:akwasi_awuah/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'config.dart';
 
 enum ModalDialogTypes { info, success, error, warning }
 
-Widget createErrorWidget({String error = ""}) {
+Widget createErrorWidget(BuildContext context, {String error = ""}) {
   return Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        const Icon(
-          Icons.error_outline,
+         Icon(
+          context.platformIcons.error,
           color: Colors.red,
           size: 60,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 16),
           child:
-              error.isNotEmpty ? null : Text('Error: $error'),
+              error.isNotEmpty ? null : PlatformText('Error: $error'),
         )
       ],
     ),
@@ -37,11 +38,11 @@ Widget createProgressWidget(BuildContext context,
           ),
           child: Column(
             children: <Widget>[
-              CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.primaryVariant),),
+              PlatformCircularProgressIndicator(),
               const SizedBox(
                 height: 8.0,
               ),
-              Text(
+              PlatformText(
                 message,
                 style: textTheme.headline6!
                     .copyWith(color: Theme.of(context).colorScheme.secondary),
@@ -59,7 +60,7 @@ showProgressModal(BuildContext context, {required String message}) {
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return AlertDialog(
+      return PlatformAlertDialog(
           content: SizedBox(
               height: 100,
               child: createProgressWidget(context, message: message)));
@@ -70,20 +71,20 @@ showProgressModal(BuildContext context, {required String message}) {
 showMessageModal(BuildContext context,
     {required String title,
     required String message,
-    ModalDialogTypes type = ModalDialogTypes.info}) {
+     ModalDialogTypes type = ModalDialogTypes.info}) {
   Icon modalIcon;
 
   switch (type) {
     case ModalDialogTypes.info:
-      modalIcon = Icon(Icons.info_outline,
+      modalIcon = Icon(context.platformIcons.info,
           color: Colors.lightBlue.shade700, size: 28.0);
       break;
     case ModalDialogTypes.success:
-      modalIcon = Icon(Icons.check_circle_outline,
+      modalIcon = Icon(context.platformIcons.checkMarkCircled,
           color: Colors.green.shade700, size: 28.0);
       break;
     case ModalDialogTypes.error:
-      modalIcon = Icon(Icons.error_outline,
+      modalIcon = Icon(context.platformIcons.error,
           color: Colors.red.shade700, size: 28.0);
       break;
     case ModalDialogTypes.warning:
@@ -91,7 +92,7 @@ showMessageModal(BuildContext context,
           Icon(Icons.warning, color: Colors.amber.shade700, size: 28.0);
       break;
     default:
-      modalIcon = Icon(Icons.info_outline,
+      modalIcon = Icon(context.platformIcons.info,
           color: Colors.lightBlue.shade700, size: 28.0);
       break;
   }
@@ -100,14 +101,14 @@ showMessageModal(BuildContext context,
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return AlertDialog(
+      return PlatformAlertDialog(
         title: Row(
           children: <Widget>[
             modalIcon,
             const SizedBox(
               width: 12.0,
             ),
-            Text(
+            PlatformText(
               title,
               style: textTheme.headline5!.copyWith(fontSize: 20),
             ),
@@ -118,8 +119,8 @@ showMessageModal(BuildContext context,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            type == ModalDialogTypes.success? const Icon(Icons.check_circle, color: Colors.green, size: 100.0,): Container(),
-            Text(
+            type == ModalDialogTypes.success?  Icon(context.platformIcons.checkMarkCircled, color: Colors.green, size: 100.0,): Container(),
+            PlatformText(
               message,
               style: textTheme.subtitle2!.copyWith(fontSize: 16),
             ),
@@ -128,9 +129,9 @@ showMessageModal(BuildContext context,
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(
+            child: PlatformText(
               'OK',
-              style: textTheme.headline1!
+              style: textTheme.headline5!
                   .copyWith(color: Theme.of(context).primaryColor),
             ),
           )
@@ -141,15 +142,15 @@ showMessageModal(BuildContext context,
 }
 
 showAlertModalCustomRoute(BuildContext context, {required String message,required String route}){
-  return AlertDialog(
+  return PlatformAlertDialog(
     content: Container(
         padding:const EdgeInsets.all(10),
-        child: Text(message,style: textTheme.headline5!.copyWith(fontSize: 18),)
+        child: PlatformText(message,style: textTheme.headline5!.copyWith(fontSize: 18),)
     ),
     actions: <Widget>[
       TextButton(
         onPressed: () => Navigator.pushNamedAndRemoveUntil(context,route, (r)=> false),
-        child: Text('Login',style: textTheme.headline5!.copyWith(color: Theme.of(context).primaryColor),),
+        child: PlatformText('Login',style: textTheme.headline5!.copyWith(color: Theme.of(context).primaryColor),),
       )
     ],
   );
