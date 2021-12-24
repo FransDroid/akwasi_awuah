@@ -107,7 +107,7 @@ class _LiveRadioState extends State<LiveRadio> {
   Widget _addWidget(){
     if(adList.isNotEmpty){
       var randomItem = (adList..shuffle()).first;
-      return InkWell(
+      return GestureDetector(
         onTap: (){
           Helper.launchURL(randomItem.website);
         },
@@ -235,21 +235,18 @@ class _LiveRadioState extends State<LiveRadio> {
                  processingState == ProcessingState.buffering) {
                return Center(child: PlatformCircularProgressIndicator());
              } else if (playing != true) {
-               return IconButton(
-                 icon: Icon(context.platformIcons.playArrow,color: Colors.white),
-                 iconSize: 64.0,
+               return PlatformIconButton(
+                 icon: Icon(context.platformIcons.playArrow,color: Colors.white,size: 64,),
                  onPressed: _player.play,
                );
              } else if (processingState != ProcessingState.completed) {
-               return IconButton(
-                 icon:  Icon(context.platformIcons.pause,color: Colors.white,),
-                 iconSize: 64.0,
+               return PlatformIconButton(
+                 icon:  Icon(context.platformIcons.pause,color: Colors.white,size: 64,),
                  onPressed: _player.pause,
                );
              } else {
-               return IconButton(
-                 icon: Icon(context.platformIcons.loop,color: Colors.white),
-                 iconSize: 64.0,
+               return PlatformIconButton(
+                 icon: Icon(context.platformIcons.loop,color: Colors.white,size: 64,),
                  onPressed: () => _player.seek(Duration.zero,
                      index: _player.effectiveIndices!.first),
                );

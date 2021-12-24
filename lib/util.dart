@@ -1,4 +1,5 @@
 import 'package:akwasi_awuah/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
@@ -56,7 +57,7 @@ logWithTime(String message) {
 }
 
 showProgressModal(BuildContext context, {required String message}) {
-  showDialog(
+  showPlatformDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
@@ -97,7 +98,7 @@ showMessageModal(BuildContext context,
       break;
   }
 
-  return  showDialog(
+  return  showPlatformDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
@@ -172,3 +173,29 @@ String formatDateTime(DateTime dateTime){
   bottomRight: Radius.circular(10.0),
   ));
 }
+
+
+ myMaterialTextFormFieldData(String label,String hintText){
+  return MaterialTextFormFieldData(
+    decoration:  InputDecoration(
+        labelStyle: const TextStyle(color: Colors.white),
+        hintStyle: const TextStyle(color: Colors.grey),
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.lightBlue),
+        ),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.lightBlue),
+        ),
+        hintText: hintText,
+        labelText: label),
+    style: const TextStyle(color: Colors.white),
+  );
+ }
+
+ myCupertinoTextFormFieldData(){
+  return CupertinoTextFormFieldData(
+      decoration: const BoxDecoration(
+          color: CupertinoColors.lightBackgroundGray
+      )
+  );
+ }
