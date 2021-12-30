@@ -2,17 +2,14 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:akwasi_awuah/helper.dart';
 import 'package:akwasi_awuah/models.dart';
 import 'package:akwasi_awuah/view_controller.dart';
-import 'package:akwasi_awuah/widgets/ads_video_controller.dart';
 import 'package:akwasi_awuah/widgets/banner_ad.dart';
-import 'package:akwasi_awuah/widgets/radio_service.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -104,54 +101,6 @@ class _LiveRadioState extends State<LiveRadio> {
      );
    }
 
-  Widget _addWidget(){
-    if(adList.isNotEmpty){
-      var randomItem = (adList..shuffle()).first;
-      return GestureDetector(
-        onTap: (){
-          Helper.launchURL(randomItem.website);
-        },
-        child: Container(
-          color: const Color(0x0ffffff0),
-          child:
-          randomItem.video == '[]' ?
-          Stack(
-            children: <Widget>[
-              CachedNetworkImage(
-                imageUrl: randomItem.image.toString(),
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.fill,
-                placeholder: (context, url) => Container(
-                  //child: CircularProgressIndicator(strokeWidth: 1,),padding: EdgeInsets.all(10)
-                ),
-              ),
-              Positioned(
-                  top: 10,
-                  left: 10,
-                  child: Container(
-                    color: Colors.black45,
-                    padding: const EdgeInsets.all(5),
-                    child: Text(Strings.Lbl_Advert,style: textTheme.subtitle2!.copyWith(
-                        color: Colors.white
-                    ),),
-                  )
-              ),
-            ],
-          ) :
-          Stack(
-              alignment: FractionalOffset.bottomRight +
-                  const FractionalOffset(-0.1, -0.1),
-              children: <Widget>[
-                VideoPlayPauseAds(randomItem.video!),
-              ]
-          ),
-        ),
-      );
-    }else {
-      return Container();
-    }
-  }
-
    Widget _buildBody() {
      model = Provider.of<ViewController>(context);
      return  Stack(
@@ -187,25 +136,11 @@ class _LiveRadioState extends State<LiveRadio> {
                ),
                flex: 2,
              ),
-             Expanded(
+             const Expanded(
                flex: 2,
-               child: StatefulBuilder(
-                 builder: (BuildContext context, void Function(void Function()) setStateAd) {
-                   Timer.periodic(const Duration(seconds: 60), (_) {
-
-                   });
-                   return FutureBuilder(
-                       future: model.getAdList(Strings.jimah_ads_news_details),
-                       builder: (context, AsyncSnapshot<List<AdsListModel>> snapshot) {
-                         if(snapshot.hasData) {
-                           adList = snapshot.data!;
-                           return _addWidget();
-                         }else{
-                           return Container();
-                         }
-                       }
-                   );
-                 },
+               child: Padding(
+                 padding: EdgeInsets.all(10.0),
+                 child: ReusableInlineExample(),
                ),
              ),
               Expanded(

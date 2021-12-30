@@ -1,12 +1,12 @@
 import 'package:akwasi_awuah/helper.dart';
 import 'package:akwasi_awuah/util.dart';
 import 'package:akwasi_awuah/view_controller.dart';
+import 'package:akwasi_awuah/widgets/banner_ad.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../config.dart';
 import '../theme.dart';
@@ -44,7 +44,8 @@ class _ContactUsState extends State<ContactUs> {
               fit: BoxFit.cover)),
       child: Column(
         children: [
-          Flexible(
+          Expanded(
+            flex: 12,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: SingleChildScrollView(
@@ -64,7 +65,7 @@ class _ContactUsState extends State<ContactUs> {
                       PlatformText("Contact Us",
                           style: textTheme.headline6!.copyWith(fontSize: 20,color: Colors.white),
                           textAlign: TextAlign.left),
-                      const SizedBox(height: 20,),
+                      const SizedBox(height: 10,),
                       PlatformTextFormField(
                         controller: _controllerEmail,
                         autofocus: false,
@@ -138,7 +139,6 @@ class _ContactUsState extends State<ContactUs> {
                                 }
                         },
                       ),
-                      const SizedBox(height: 20,),
                       Align(
                         alignment: FractionalOffset.bottomCenter,
                         child: PlatformText('Developed by JimahTech Limited',
@@ -151,6 +151,11 @@ class _ContactUsState extends State<ContactUs> {
               ),
             ),
           ),
+          const Expanded(
+            flex: 1,
+              child:  Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ReusableBanner()))
         ],
       ),
     );

@@ -178,11 +178,12 @@ class TVResponse {
     String? id;
     String? status;
     String? tv_url;
+    String? tv_status;
     String? updated_at;
     String? android_version;
     String? ios_version;
 
-    TVResponse({this.app_update_status, this.id, this.status, this.tv_url, this.updated_at, this.android_version, this.ios_version});
+    TVResponse({this.app_update_status, this.id, this.status, this.tv_url,this.tv_status, this.updated_at, this.android_version, this.ios_version});
 
     factory TVResponse.fromJson(Map<String, dynamic> json) {
         return TVResponse(
@@ -190,6 +191,7 @@ class TVResponse {
             id: json['id'],
             status: json['status'],
             tv_url: json['tv_url'],
+          tv_status: json['tv_status'],
             updated_at: json['updated_at'],
           android_version: json['android_version'],
           ios_version: json['ios_version'],
@@ -202,6 +204,7 @@ class TVResponse {
         data['id'] = this.id;
         data['status'] = this.status;
         data['tv_url'] = this.tv_url;
+        data['tv_status'] = this.tv_status;
         data['updated_at'] = this.updated_at;
         data['android_version'] = this.android_version;
         data['ios_version'] = this.ios_version;
